@@ -22,6 +22,7 @@ jobs:
   build_apk:
     name: Build Apk
     runs-on: ubuntu-latest
+    needs: download_deps
 
     steps:
       - name: Clone repo
