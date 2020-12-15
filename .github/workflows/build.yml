@@ -1,0 +1,39 @@
+name: Build App
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  download_deps:
+    name: Download dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Download dependencies
+        run: |
+          cd buildscripts
+          ./download.sh
+
+  build_apk:
+    name: Build Apk
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Build Apk
+        run: |
+          cd buildscripts
+          ./buildall.sh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mpv-android
+          path: app/
